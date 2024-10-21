@@ -4,12 +4,24 @@
     Author     : KHOACNTT
 --%>
 
+<%@page import="model.Loai"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="dao.LoaiDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% 
+        LoaiDAO loaiDAO = new LoaiDAO();
+        ArrayList<Loai> dsLoai = loaiDAO.getAll();
+%>
 <div class="card mb-3">
-    <h3 class="card-header">Category</h3>  
+    <h3 class="card-header">Danh mục loại</h3>  
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">Category 1</li>
-            <li class="list-group-item">Category 2</li>
-            <li class="list-group-item">Category 3</li>
-        </ul>   
+            <% 
+                for (Loai loai: dsLoai)
+                {
+            %>
+            <li class="list-group-item"><a class="text-decoration-none" href="product.jsp?maloai=<%=loai.getMaloai() %>"><%=loai.getTenloai() %></a></li>
+            <% 
+                }
+            %>
+        </ul>    
 </div>
