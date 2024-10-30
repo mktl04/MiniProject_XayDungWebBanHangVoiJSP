@@ -15,18 +15,18 @@
 <div class="container">
     
     <h2>Thêm sản phẩm (Hoa)</h2>    
-    <form method="post">
+    <form method="post" enctype="multipart/form-data" >
         <div class="mb-2">
             <label>Tên hoa</label>
-            <input type="text" name="tenhoa" value="" class="form-control" />
+            <input type="text" name="tenhoa" value="" required="" class="form-control" />
         </div>
         <div class="mb-2">
             <label>Giá</label>
-            <input type="number" name="gia" value="" class="form-control" />
+            <input type="number" name="gia" value="" required="" class="form-control" />
         </div>
         <div class="mb-2">
             <label>Hình ảnh</label>
-            <input type="file" name="hinh" value="" class="form-control" />
+            <input type="file" name="hinh" value="" class="form-control" required="" />
         </div>
          <div class="mb-2">
             <label>Thể loại</label>

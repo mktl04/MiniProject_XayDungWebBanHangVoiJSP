@@ -13,6 +13,17 @@
              
 <jsp:include page="../shared/nav.jsp" />
 
+<% if (request.getAttribute("success") !=null) { %>
+    <script>
+    Swal.fire({
+  title: "Đã thực thi!",
+  text: "Thao tác thành công",
+  icon: "success"
+});
+    </script>
+<% 
+    }
+%>
 
 <div class="container">
     <h2> Danh sách sản phẩm</h2>
@@ -41,7 +52,7 @@
             <td><%=x.getMaloai() %></td>
             <td>
                  <a href="ManageProduct?action=EDIT&mahoa=<%=x.getMahoa() %>" class="btn btn-secondary"> <i class="bi bi-pencil-square"></i> Sửa</a>
-                 <a href="ManageProduct?action=DELETE&mahoa=<%=x.getMahoa() %>" class="btn btn-danger"> <i class="bi bi-trash"></i> Xoá</a>
+                 <a href="ManageProduct?action=DELETE&mahoa=<%=x.getMahoa() %>" class="btn btn-danger" onclick="return confirm('Bạn có đồng ý xóa không?')"> <i class="bi bi-trash"></i> Xoá</a>
             </td>
         </tr>       
         <%
