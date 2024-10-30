@@ -10,11 +10,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <jsp:include page="../shared/header.jsp" />
-
+z
 <jsp:include page="../shared/nav.jsp" />
-<% 
-    Hoa hoa = (Hoa)request.getAttribute("hoa");
-    ArrayList<Loai> dsLoai = (ArrayList<Loai>)request.getAttribute("dsLoai");
+<%
+    Hoa hoa = (Hoa) request.getAttribute("hoa");
+    ArrayList<Loai> dsLoai = (ArrayList<Loai>) request.getAttribute("dsLoai");
 %>
 
 <div class="container">

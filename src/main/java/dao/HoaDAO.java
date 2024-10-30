@@ -56,7 +56,7 @@ public class HoaDAO {
     }
 
     public boolean Update(Hoa hoa) {
-        String sql = "update hoa set tenhoa=?, hinh=?, maloai=?, ngaycapnhat=?, where mahoa=?";
+        String sql = "update hoa set tenhoa=?,gia=? , hinh=?, maloai=?, ngaycapnhat=? where mahoa=?";
         conn = DbContext.getConnection();
         try {
             ps = conn.prepareStatement(sql);

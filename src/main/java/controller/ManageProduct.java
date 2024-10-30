@@ -49,7 +49,15 @@ public class ManageProduct extends HttpServlet {
         switch (action) {
             case "LIST":
                 //Tra ve giao dien liet ke danh sach san pham quan tri
-                request.setAttribute("dsHoa", hoaDAO.getAll());
+                int pageSize = 5;
+                int pageIndex = 1;
+                if (request.getParameter("page")!= null){
+                    pageIndex = Integer.parseInt(request.getParameter("page"));
+                }
+                int sumOfPage = (int) Math.ceil((double)hoaDAO.getAll().size()/pageSize);
+                request.setAttribute("sumOfPage", sumOfPage);
+                request.setAttribute("pageIndex", pageIndex);
+                request.setAttribute("dsHoa", hoaDAO.getByPage(pageIndex, pageSize));
                 request.getRequestDispatcher("admin/list_product.jsp").forward(request, response);
                 break;
             case "ADD":
@@ -57,19 +65,17 @@ public class ManageProduct extends HttpServlet {
                     //tra ve gioa dien them moi san pham
                     request.setAttribute("dsLoai", loaiDAO.getAll());
                     request.getRequestDispatcher("admin/add_product.jsp").forward(request, response);
-                } else {
+                } else if (method.equalsIgnoreCase("post")){
                     //xu ly them moi san pham
                     //b1 Lay thong tin san pham
                     String tenhoa = request.getParameter("tenhoa");
                     double gia = Double.parseDouble(request.getParameter("gia"));
                     Part part = request.getPart("hinh");
                     int maloai = Integer.parseInt(request.getParameter("maloai"));
-
                     //b2 Xu ly upload file
                     String realpath = request.getServletContext().getRealPath("/assets/images/products");
                     String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
                     part.write(realpath + "/" + filename);
-
                     //3. Them san pham vao CSDL
                     Hoa objInsert = new Hoa(0, tenhoa, gia, filename, maloai, new Date(new java.util.Date().getTime()));
                     if (hoaDAO.Insert(objInsert)) {
@@ -101,9 +107,9 @@ public class ManageProduct extends HttpServlet {
 
                     //b2 Xu ly upload file
                     if (part.getSize() > 0) {
-                        String realPath = request.getServletContext().getRealPath("/assets/images/products");
+                        String realpath = request.getServletContext().getRealPath("/assets/images/products");
                         filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-                        part.write(realPath + "/" + filename);
+                        part.write(realpath + "/" + filename);
                     }
 
                     //3. Cap nhat san pham vao CSDL
