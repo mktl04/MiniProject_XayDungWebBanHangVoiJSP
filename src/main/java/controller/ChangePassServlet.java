@@ -19,8 +19,8 @@ import model.TaiKhoan;
  *
  * @author DELL
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "ChangePassServlet", urlPatterns = {"/ChangePassServlet"})
+public class ChangePassServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,25 +34,30 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //B1. Lấy thông tin username và password
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        //B2. Xác thực thông tin
+        //Lấy thông tin mật khẩu
+        String oldpass = request.getParameter("oldpassword");
+        String newpass= request.getParameter("newpassword");
+        String confirmpass = request.getParameter("confirmpassword");
+
+        if (!newpass.equals(confirmpass)) {
+            request.setAttribute("error", "Mật khẩu mới và mật khẩu xác nhận không khớp với nhau, vui lòng nhập lại");
+            request.getRequestDispatcher("changepass.jsp").forward(request, response);
+        }
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
         TaiKhoanDAO tkDAO = new TaiKhoanDAO();
-        TaiKhoan tk = tkDAO.checkLogIn(username, password);
-        if (tk!=null) {
-            //Lưu thông tin lịch sử
-            HttpSession session = request.getSession();
-            session.setAttribute("username", username);
-            //Điều hướng tới trang mặc định home.jsp
-            response.sendRedirect("home.jsp");
+        TaiKhoan tk = tkDAO.checkLogIn(username, oldpass);
+        if (tk != null) {
+            tk.setMatkhau(newpass);
+            tkDAO.changePassword(tk);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
         } else {
-            request.setAttribute("error", "Đăng nhập thất bại (Sai tên đăng nhập hoặc mật khẩu)");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.setAttribute("error", "Mật khẩu cũ không đúng");
+            request.getRequestDispatcher("changepass.jsp").forward(request, response);
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

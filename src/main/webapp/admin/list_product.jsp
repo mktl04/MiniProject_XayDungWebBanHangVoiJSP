@@ -58,7 +58,7 @@
         %>
         <tr>
             <td><%=x.getTenhoa()%></td>
-            <td><%=x.getGia()%></td>
+            <td><%=x.getGia()%> Đ</td>
             <td> <img src="assets/images/products/<%=x.getHinh()%>" style="width: 100px">  </td>
             <td><%=x.getMaloai()%></td>
             <td>
