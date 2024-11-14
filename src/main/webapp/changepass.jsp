@@ -12,7 +12,7 @@
 <jsp:include page="shared/nav.jsp" />
 <div class="container">
     <h2>Change Password</h2>
-    <form action="LoginServlet" method="post">
+    <form action="ChangePassServlet" method="post">
         <div>
             <label>Old password</label>
             <input type="password" name="oldpassword" value="" required="" class="form-control">
@@ -21,6 +21,7 @@
             <label>New password</label>
             <input type="password" name="newpassword" value="" required="" class="form-control">
         </div>
+        <div>
             <label>Confirm new password</label>
             <input type="password" name="confirmpassword" value="" required="" class="form-control">
         </div>

@@ -35,6 +35,7 @@ public class ChangePassServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         //Lấy thông tin mật khẩu
+        //Lấy thông tin mật khẩu
         String oldpass = request.getParameter("oldpassword");
         String newpass= request.getParameter("newpassword");
         String confirmpass = request.getParameter("confirmpassword");
